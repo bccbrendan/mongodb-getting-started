@@ -42,19 +42,20 @@ public class Exercise3InsertTest {
     @Test
     public void shouldBeAbleToSaveAPerson() throws UnknownHostException {
         // Given
-        MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
+        MongoClient mongoClient = new MongoClient();
         DB database = mongoClient.getDB("Examples");
         DBCollection collection = database.getCollection("people");
 
         Person charlie = new Person("charlie", "Charles", new Address("74 That Place", "LondonTown", 1234567890), asList(1, 74));
 
         // When
-        // TODO: insert Charlie into the collection
+        collection.insert(PersonAdaptor.toDBObject(charlie));
 
         // Then
         assertThat(collection.find().count(), is(1));
 
         // Clean up
         database.dropDatabase();
+        mongoClient.close();
     }
 }

@@ -11,10 +11,10 @@ public class Exercise1ConnectingTest {
     @Test
     public void shouldCreateANewMongoClientConnectedToLocalhost() throws Exception {
         // When
-        // TODO: get/create the MongoClient
-        MongoClient mongoClient = null;
+        MongoClient mongoClient = new MongoClient();
 
         // Then
         assertThat(mongoClient, is(notNullValue()));
+        mongoClient.close();
     }
 }
