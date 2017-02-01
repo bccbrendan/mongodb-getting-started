@@ -7,6 +7,7 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import org.junit.After;
@@ -38,8 +39,9 @@ public class Exercise4RetrieveTest {
         collection.insert(PersonAdaptor.toDBObject(bob));
 
         // When
-        // TODO: get this from querying the collection.  Hint: you can find just one
-        DBObject result = null;
+        DBObject query = new BasicDBObject("_id", "bob");
+        DBCursor cursor = collection.find(query);
+        DBObject result = cursor.one();
 
         // Then
         assertThat((String) result.get("_id"), is("bob"));
@@ -55,8 +57,8 @@ public class Exercise4RetrieveTest {
         collection.insert(PersonAdaptor.toDBObject(bob));
 
         // When
-        // TODO: get a cursor with everything in the database
-        DBCursor cursor = null;
+        DBObject query = new BasicDBObject();
+        DBCursor cursor = collection.find(query);
 
         // Then
         assertThat(cursor.size(), is(2));
@@ -75,8 +77,7 @@ public class Exercise4RetrieveTest {
         collection.insert(PersonAdaptor.toDBObject(bob));
 
         // When
-        // TODO create the query document
-        DBObject query = null;
+        DBObject query = new BasicDBObject("_id", "bob");
         DBCursor cursor = collection.find(query);
 
         // Then

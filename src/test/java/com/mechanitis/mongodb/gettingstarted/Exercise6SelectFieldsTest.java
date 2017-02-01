@@ -7,6 +7,7 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import org.junit.After;
@@ -35,10 +36,9 @@ public class Exercise6SelectFieldsTest {
         collection.insert(PersonAdaptor.toDBObject(bob));
 
         // When
-        // TODO create the correct query to find Charlie by name (see above)
-        DBObject query = null;
-        // TODO use this query, combined with the "fields" selector, to get a list of result documents with only the name and ID fields
-        DBCursor results = null;
+        DBObject query = new BasicDBObject("name", "Charles");
+        
+        DBCursor results = collection.find(query, new BasicDBObject("name", 1).append("_id", 1));
 
         // Then
         assertThat(results.size(), is(1));
@@ -60,10 +60,8 @@ public class Exercise6SelectFieldsTest {
         collection.insert(PersonAdaptor.toDBObject(bob));
 
         // When
-        // TODO create the correct query to find Charlie by name (see above)
-        DBObject query = null;
-        // TODO use this query, combined with the "fields" selector, to get a list of result documents without address subdocument
-        DBCursor results = null;
+        DBObject query = new BasicDBObject("name", "Charles");
+        DBCursor results = collection.find(query, new BasicDBObject("address", 0));
 
         // Then
         assertThat(results.size(), is(1));

@@ -7,6 +7,7 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import org.junit.After;
@@ -33,10 +34,8 @@ public class Exercise5SimpleQueryTest {
         collection.insert(PersonAdaptor.toDBObject(bob));
 
         // When
-        // TODO create the correct query to find Charlie by name
-        DBObject query = null;
-        // TODO use this query to get a List of matching Documents from the database
-        DBCursor results = null;
+        DBObject query = new BasicDBObject("name", "Charles");
+        DBCursor results = collection.find(query);
 
         // Then
         assertThat(results.size(), is(1));
