@@ -6,6 +6,7 @@ import com.mechanitis.mongodb.gettingstarted.person.PersonAdaptor;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.WriteResult;
@@ -36,10 +37,11 @@ public class Exercise11UpdateAFieldTest {
         String charliesNewAddress = "987 The New Street";
 
         // When
-        // TODO create query to find Charlie by ID
-        DBObject findCharlie = null;
-        // TODO use the query to find charlie and update his street with the new address
-        WriteResult resultOfUpdate = null;
+        // create query to find Charlie by ID
+        DBObject findCharlie = new BasicDBObject("_id", "charlie");
+        // use the query to find charlie and update his street with the new address
+        WriteResult resultOfUpdate = collection.update(findCharlie, 
+                        new BasicDBObject("$set", new BasicDBObject("address.street", charliesNewAddress)));
 
         // Then
         assertThat(resultOfUpdate.getN(), is(1));
@@ -66,10 +68,11 @@ public class Exercise11UpdateAFieldTest {
         collection.insert(PersonAdaptor.toDBObject(charlie));
 
         // When
-        // TODO create query to find Charlie by ID
-        DBObject findCharlie = null;
-        // TODO use the query to find charlie and update his street with the new address
-        WriteResult resultOfUpdate = null;
+        // create query to find Charlie by ID
+        DBObject findCharlie = new BasicDBObject("_id", "charlie");
+        // TODO use the query to find charlie and add NewField: A New Value
+        WriteResult resultOfUpdate = collection.update(findCharlie,
+                        new BasicDBObject("$set", new BasicDBObject("newField", "A New Value")));
 
         // Then
         assertThat(resultOfUpdate.getN(), is(1));
@@ -92,9 +95,10 @@ public class Exercise11UpdateAFieldTest {
         collection.insert(PersonAdaptor.toDBObject(charlie));
 
         // When
-        // TODO create query to find Bob by ID
-        DBObject findBob = null;
-        // TODO update the only Bob document to add the ID '66' to the array of Book IDs
+        // create query to find Bob by ID
+        DBObject findBob = new BasicDBObject("_id", "bob");
+        // update the only Bob document to add the ID '66' to the array of Book IDs
+        collection.update(findBob, new BasicDBObject("$push", new BasicDBObject("books", 66)));
 
         // Then
         DBObject newBob = collection.find(findBob).toArray().get(0);

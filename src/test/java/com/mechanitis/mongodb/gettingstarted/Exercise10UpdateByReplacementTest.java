@@ -6,6 +6,7 @@ import com.mechanitis.mongodb.gettingstarted.person.PersonAdaptor;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.WriteResult;
@@ -37,10 +38,10 @@ public class Exercise10UpdateByReplacementTest {
         // When
         Person updatedCharlieObject = new Person("charlie", "Charles the Suave", new Address("A new street", "GreatCity", 7654321),
                                                  Collections.<Integer>emptyList());
-        // TODO create query to find Charlie by ID
-        DBObject findCharlie = null;
-        // TODO do an update replacing the whole previous Document with the new one
-        WriteResult resultOfUpdate = null;
+        // create query to find Charlie by ID
+        DBObject findCharlie = new BasicDBObject("_id", "charlie");
+        // do an update replacing the whole previous Document with the new one
+        WriteResult resultOfUpdate = collection.update(findCharlie, PersonAdaptor.toDBObject(updatedCharlieObject));
 
         // Then
         assertThat(resultOfUpdate.getN(), is(1));

@@ -7,6 +7,7 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import org.junit.After;
@@ -33,10 +34,10 @@ public class Exercise7QueryOperatorsTest {
         collection.insert(PersonAdaptor.toDBObject(bob));
 
         // When
-        //TODO build up a query which checks the numeric value
-        DBObject query = null;
-        // TODO use this query to get a List of matching Documents from the database
-        DBCursor results = null;
+        // build up a query which checks the numeric value
+        DBObject query = new BasicDBObject("address.phone", new BasicDBObject("$lt", 1000000000));
+        // use this query to get a List of matching Documents from the database
+        DBCursor results = collection.find(query);
 
         // Then
         assertThat(results.size(), is(1));

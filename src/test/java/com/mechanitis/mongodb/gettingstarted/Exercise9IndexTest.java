@@ -26,7 +26,10 @@ public class Exercise9IndexTest {
         collection.insert(new BasicDBObject("fieldToIndex", "Bob"));
         
         // when
-        // TODO: added the index to the collection
+        // added the index to the collection
+        // collection.createIndex(new BasicDBObject("fieldToIndex", 1));
+        collection.createIndex(new BasicDBObject("fieldToIndex", 1));
+
 
         // then
         DBObject indexKey = (DBObject) collection.getIndexInfo().get(1).get("key");
