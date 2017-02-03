@@ -6,6 +6,7 @@ import com.mechanitis.mongodb.gettingstarted.person.PersonAdaptor;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.WriteResult;
@@ -39,10 +40,10 @@ public class Exercise14RemoveTest {
         collection.insert(PersonAdaptor.toDBObject(emily));
 
         // When
-        // TODO create a query to find charlie by ID
-        DBObject query = null;
-        // TODO execute the remove
-        WriteResult resultOfRemove = null;
+        // create a query to find charlie by ID
+        DBObject query = new BasicDBObject("_id", "charlie");
+        // execute the remove
+        WriteResult resultOfRemove = collection.remove(query);
 
         // Then
         assertThat(resultOfRemove.getN(), is(1));
@@ -68,10 +69,10 @@ public class Exercise14RemoveTest {
         collection.insert(PersonAdaptor.toDBObject(emily));
 
         // When
-        // TODO create the query to check the city field inside the address subdocument for 'LondonTown'
-        DBObject query = null;
-        // TODO execute the remove
-        WriteResult resultOfRemove = null;
+        // create the query to check the city field inside the address subdocument for 'LondonTown'
+        DBObject query = new BasicDBObject("address.city", "LondonTown");
+        // execute the remove
+        WriteResult resultOfRemove = collection.remove(query);
 
         // Then
         assertThat(resultOfRemove.getN(), is(2));

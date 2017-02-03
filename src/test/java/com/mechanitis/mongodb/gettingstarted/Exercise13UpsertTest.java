@@ -6,6 +6,7 @@ import com.mechanitis.mongodb.gettingstarted.person.PersonAdaptor;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.WriteResult;
@@ -38,10 +39,10 @@ public class Exercise13UpsertTest {
         Person claire = new Person("claire", "Claire", new Address("1", "Town", 836558493), Collections.<Integer>emptyList());
 
         // When
-        // TODO create query to find Claire by ID
-        DBObject findClaire = null;
-        // TODO Perform an update with this new person to show it does NOT get added to the database
-        WriteResult resultOfUpdate = null;
+        // create query to find Claire by ID
+        DBObject findClaire = new BasicDBObject("_id", "claire");
+        // Perform an update with this new person to show it does NOT get added to the database
+        WriteResult resultOfUpdate = collection.update(findClaire, PersonAdaptor.toDBObject(claire), false, false);
 
         // Then
         assertThat(resultOfUpdate.getN(), is(0));
@@ -50,8 +51,8 @@ public class Exercise13UpsertTest {
 
 
         // When
-        // TODO Perform an update with this new person to show it DOES get added to the database
-        WriteResult resultOfUpsert = null;
+        // Perform an update with this new person to show it DOES get added to the database
+        WriteResult resultOfUpsert = collection.update(findClaire, PersonAdaptor.toDBObject(claire), true, false);
 
         // Then
         assertThat(resultOfUpsert.getN(), is(1));
